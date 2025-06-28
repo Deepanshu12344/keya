@@ -1,0 +1,67 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Environment variables
+.env
+.env.*.local
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Compiled source
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Debug and error files
+*.tgz
+*.swp
+
+# Docker files
+docker-compose.override.yml
+.docker/
+
+# Optional npm cache directory
+.npm/
+
+# Logs from pm2
+pids/
+*.log
+
+# Database dumps
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.bak
+*.sql
+
+# Optional lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

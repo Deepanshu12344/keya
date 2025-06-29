@@ -6,9 +6,11 @@ import authRouter from './routes/auth.js'
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
 app.use(express.json());
 app.use(cors());
+dotenv.config();
+
+app.use('/api', authRouter);
 
 mongoose.connect(process.env.MONGOURL)
 .then(()=>{

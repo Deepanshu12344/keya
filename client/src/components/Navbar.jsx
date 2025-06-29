@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, ShoppingCart, Menu, X, User, Heart } from 'lucide-react';
+import AuthModal from './AuthModal';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
 
   // Handle scroll effect
   useEffect(() => {
@@ -30,13 +33,22 @@ export default function Navbar() {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  const openAuthModal = (mode = 'login') => {
+    setAuthMode(mode);
+    setIsAuthModalOpen(true);
+  };
+
+  const closeAuthModal = () => {
+    setIsAuthModalOpen(false);
+  };
+
   return (
     <>
       {/* Main Navbar */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-[#C37B89]/95 backdrop-blur-md shadow-lg' 
-          : 'bg-[#C37B89]'
+          ? 'bg-[#7C1034]/95 backdrop-blur-md shadow-lg' 
+          : 'bg-[#7C1034]'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-24">
@@ -86,7 +98,7 @@ export default function Navbar() {
               }`}>
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <Search className={`h-5 w-5 transition-colors duration-200 ${
-                    isSearchFocused ? 'text-[#C37B89]' : 'text-white/70'
+                    isSearchFocused ? 'text-[#7C1034]' : 'text-white/70'
                   }`} />
                 </div>
                 <input
@@ -118,7 +130,7 @@ export default function Navbar() {
               {/* Wishlist Icon (Desktop) */}
               <button className="hidden md:flex text-white hover:text-pink-200 p-2 rounded-full hover:bg-white/10 transition-all duration-200 relative group">
                 <Heart className="h-5 w-5" />
-                <span className="absolute -top-1 -right-1 bg-white text-[#C37B89] text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <span className="absolute -top-1 -right-1 bg-white text-[#7C1034] text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   2
                 </span>
               </button>
@@ -126,7 +138,7 @@ export default function Navbar() {
               {/* Enhanced Cart Icon */}
               <button className="text-white hover:text-pink-200 p-2 rounded-full hover:bg-white/10 transition-all duration-200 relative group">
                 <ShoppingCart className="h-6 w-6" />
-                <span className="absolute -top-1 -right-1 bg-white text-[#C37B89] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+                <span className="absolute -top-1 -right-1 bg-white text-[#7C1034] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
                   3
                 </span>
                 <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
@@ -135,7 +147,10 @@ export default function Navbar() {
               </button>
 
               {/* Enhanced Login Button */}
-              <button className="text-white border-2 border-white hover:bg-white hover:text-[#C37B89] px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center space-x-2 hover:shadow-lg hover:scale-105">
+              <button 
+                onClick={() => openAuthModal('login')}
+                className="text-white border-2 border-white hover:bg-white hover:text-[#7C1034] px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center space-x-2 hover:shadow-lg hover:scale-105"
+              >
                 <User className="h-4 w-4" />
                 <span className="hidden sm:inline">Login</span>
               </button>
@@ -167,7 +182,7 @@ export default function Navbar() {
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsMenuOpen(false)}></div>
         
         {/* Mobile Menu Drawer */}
-        <div className={`mobile-menu fixed left-0 top-0 h-full w-80 bg-gradient-to-b from-[#C37B89] to-[#B86B7A] shadow-2xl transform transition-transform duration-300 ${
+        <div className={`mobile-menu fixed left-0 top-0 h-full w-80 bg-gradient-to-b from-[#7C1034] to-[#B86B7A] shadow-2xl transform transition-transform duration-300 ${
           isMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
           <div className="p-6">
@@ -205,6 +220,28 @@ export default function Navbar() {
               ))}
             </nav>
 
+            {/* Mobile Auth Buttons */}
+            <div className="mt-8 space-y-3">
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  openAuthModal('login');
+                }}
+                className="w-full bg-white text-[#7C1034] py-3 px-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200"
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  openAuthModal('register');
+                }}
+                className="w-full border-2 border-white text-white py-3 px-4 rounded-lg font-semibold hover:bg-white hover:text-[#7C1034] transition-all duration-200"
+              >
+                Sign Up
+              </button>
+            </div>
+
             {/* Mobile Menu Footer */}
             <div className="absolute bottom-6 left-6 right-6">
               <div className="bg-white/10 rounded-lg p-4 text-center">
@@ -217,6 +254,13 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal 
+        isOpen={isAuthModalOpen}
+        onClose={closeAuthModal}
+        initialMode={authMode}
+      />
 
       {/* Spacer to prevent content from hiding behind fixed navbar */}
       <div className="h-16"></div>

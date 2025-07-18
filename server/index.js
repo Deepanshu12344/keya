@@ -18,7 +18,7 @@ app.get('/', (request, response) => {
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
-app.use('/user', cartRoutes);
+app.use('/', cartRoutes);
 
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{

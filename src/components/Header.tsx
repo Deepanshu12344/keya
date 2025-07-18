@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ShoppingCart, Menu, X } from 'lucide-react';
+import { Search, ShoppingCart, Menu, X, User } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import AuthModal from './AuthModal';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const { cartItems } = useCart();
   const navigate = useNavigate();
 
@@ -19,13 +22,19 @@ const Header = () => {
 
   const cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
+  const openAuthModal = (mode: 'login' | 'register') => {
+    setAuthMode(mode);
+    setIsAuthModalOpen(true);
+  };
+
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <>
+      <header className="bg-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="text-4xl font-bold text-[#7c1034]">
-            केया
+          <Link to="/" className="text-2xl font-bold text-[#7c1034]">
+            KurtiShop
           </Link>
 
           {/* Desktop Navigation */}
@@ -60,6 +69,14 @@ const Header = () => {
 
           {/* Cart and Mobile Menu */}
           <div className="flex items-center space-x-4">
+            <button
+              onClick={() => openAuthModal('login')}
+              className="hidden md:flex items-center text-gray-700 hover:text-[#7c1034] transition-colors"
+            >
+              <User className="h-5 w-5 mr-1" />
+              <span>Login</span>
+            </button>
+            
             <Link to="/cart" className="relative">
               <ShoppingCart className="h-6 w-6 text-gray-700 hover:text-[#7c1034] transition-colors" />
               {cartItemCount > 0 && (
@@ -68,7 +85,7 @@ const Header = () => {
                 </span>
               )}
             </Link>
-
+            
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden"
@@ -110,7 +127,17 @@ const Header = () => {
               >
                 Contact
               </Link>
-
+              
+              <button
+                onClick={() => {
+                  openAuthModal('login');
+                  setIsMenuOpen(false);
+                }}
+                className="text-gray-700 hover:text-[#7c1034] text-left"
+              >
+                Login
+              </button>
+              
               {/* Mobile Search */}
               <form onSubmit={handleSearch} className="mt-4">
                 <div className="relative">
@@ -128,7 +155,14 @@ const Header = () => {
           </div>
         )}
       </div>
-    </header>
+      </header>
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        initialMode={authMode}
+      />
+    </>
   );
 };
 

@@ -4,10 +4,10 @@ const productSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
   description: { type: String },
   price: { type: Number, required: true, min: 0 },
-  category: { type: String, required: true }, // e.g. 'Party Wear'
-  subCategory: { type: String },              // e.g. 'Long Kurti'
-  sizes: [{ type: String }],                  // e.g. ['S', 'M', 'L']
-  colors: [{ type: String }],                 // optional
+  category: { type: String, required: true }, 
+  subCategory: { type: String },              
+  sizes: [{ type: String }],                  
+  colors: [{ type: String }],                 
   stock: { type: Number, default: 0 },
   imageUrls: [{ type: String }],
   createdAt: { type: Date, default: Date.now },

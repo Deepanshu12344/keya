@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import authRoutes from './routes/auth.js';
+import userRoutes from './routes/user.js';
+import cartRoutes from './routes/cart.js';
 
 dotenv.config();
 const app = express();
@@ -15,6 +17,8 @@ app.get('/', (request, response) => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
+app.use('/user', cartRoutes);
 
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{

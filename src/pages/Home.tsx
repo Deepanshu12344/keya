@@ -1,8 +1,69 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingBag, Truck, RotateCcw, Shield } from 'lucide-react';
+import { ShoppingBag, Truck, RotateCcw, Shield, Instagram, Play } from 'lucide-react';
+
+type InstagramPost = {
+  id: string;
+  caption: string;
+  media_type: string;
+  media_url: string;
+  permalink: string;
+  timestamp: string;
+};
 
 const Home = () => {
+  const [instagramPosts, setInstagramPosts] = useState<InstagramPost[]>([]);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Set default posts directly for now
+    setInstagramPosts([
+      {
+        id: '1',
+        caption: 'Beautiful handcrafted kurti collection now available! ✨ #Keya #HandmadeWithLove',
+        media_type: 'IMAGE',
+        media_url: 'https://images.pexels.com/photos/8532616/pexels-photo-8532616.jpeg?auto=compress&cs=tinysrgb&w=400',
+        permalink: 'https://instagram.com/labelkeya_',
+        timestamp: '2024-01-15T10:30:00+0000'
+      },
+      {
+        id: '2',
+        caption: 'Traditional meets modern in our latest Anarkali designs 💫',
+        media_type: 'VIDEO',
+        media_url: 'https://images.pexels.com/photos/8532617/pexels-photo-8532617.jpeg?auto=compress&cs=tinysrgb&w=400',
+        permalink: 'https://instagram.com/labelkeya_',
+        timestamp: '2024-01-14T15:45:00+0000'
+      },
+      {
+        id: '3',
+        caption: 'Cotton comfort for everyday elegance 🌸 Shop now!',
+        media_type: 'IMAGE',
+        media_url: 'https://images.pexels.com/photos/8532618/pexels-photo-8532618.jpeg?auto=compress&cs=tinysrgb&w=400',
+        permalink: 'https://instagram.com/labelkeya_',
+        timestamp: '2024-01-13T12:20:00+0000'
+      },
+      {
+        id: '4',
+        caption: 'Behind the scenes: Creating magic one stitch at a time ✂️',
+        media_type: 'VIDEO',
+        media_url: 'https://images.pexels.com/photos/8532619/pexels-photo-8532619.jpeg?auto=compress&cs=tinysrgb&w=400',
+        permalink: 'https://instagram.com/labelkeya_',
+        timestamp: '2024-01-12T09:15:00+0000'
+      },
+      {
+        id: '5',
+        caption: 'Silk kurtis that make every occasion special 💖 #LuxuryFashion',
+        media_type: 'IMAGE',
+        media_url: 'https://images.pexels.com/photos/8532620/pexels-photo-8532620.jpeg?auto=compress&cs=tinysrgb&w=400',
+        permalink: 'https://instagram.com/labelkeya_',
+        timestamp: '2024-01-11T16:30:00+0000'
+      }
+    ]);
+    setLoading(false);
+  }, []);
+
   const featuredProducts = [
     {
       id: 1,
@@ -109,6 +170,82 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Instagram Posts Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center mb-4">
+              <Instagram className="h-8 w-8 text-[#7c1034] mr-3" />
+              <h2 className="text-4xl font-bold text-gray-800">
+                Follow Our Journey
+              </h2>
+            </div>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Stay connected with us on Instagram for the latest designs, behind-the-scenes moments, and styling inspiration
+            </p>
+          </div>
+
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#7c1034]"></div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {instagramPosts.map((post) => (
+                <div key={post.id} className="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                  <div className="relative">
+                    <img
+                      src={post.media_url}
+                      alt="Instagram post"
+                      className="w-full h-64 object-cover"
+                    />
+                    {post.media_type === 'VIDEO' && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+                        <Play className="h-12 w-12 text-white" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <p className="text-white text-sm line-clamp-3">
+                          {post.caption ? post.caption.substring(0, 100) + (post.caption.length > 100 ? '...' : '') : 'View on Instagram'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">
+                        {new Date(post.timestamp).toLocaleDateString()}
+                      </span>
+                      <a
+                        href={post.permalink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#7c1034] hover:text-[#6b0d2a] transition-colors"
+                      >
+                        <Instagram className="h-5 w-5" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="text-center mt-12">
+            <a
+              href="https://instagram.com/labelkeya_"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center bg-gradient-to-r from-[#7c1034] to-[#9a1a42] text-white px-8 py-3 rounded-lg font-semibold hover:from-[#6b0d2a] hover:to-[#8a1739] transition-all duration-300 transform hover:scale-105"
+            >
+              <Instagram className="h-5 w-5 mr-2" />
+              Follow @labelkeya_
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Features */}
       <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
@@ -128,26 +265,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Newsletter */}
-      {/* <section className="py-16 bg-[#7c1034] text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">Stay Updated</h2>
-          <p className="text-xl mb-8">
-            Subscribe to our newsletter for latest collections and exclusive offers
-          </p>
-          <div className="max-w-md mx-auto flex">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-l-lg text-gray-800 focus:outline-none"
-            />
-            <button className="bg-white text-[#7c1034] px-6 py-3 rounded-r-lg font-semibold hover:bg-gray-100 transition-colors">
-              Subscribe
-            </button>
-          </div>
-        </div>
-      </section> */}
     </div>
   );
 };

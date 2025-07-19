@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Facebook, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <footer className="bg-[#7c1034] text-white">
       <div className="container mx-auto px-4 py-12">
@@ -14,14 +15,18 @@ const Footer = () => {
               Your trusted destination for beautiful, authentic kurtis. We offer a wide collection of traditional and modern designs.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-200 hover:text-white transition-colors">
+              <a href="https://www.facebook.com/people/%E0%A4%95%E0%A5%87%E0%A4%AF%E0%A4%BE/61577100002363/" className="text-gray-200 hover:text-white transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-200 hover:text-white transition-colors">
+              <a href="https://www.instagram.com/labelkeya_/" className="text-gray-200 hover:text-white transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-200 hover:text-white transition-colors">
-                <Twitter className="h-5 w-5" />
+              <a href="https://in.pinterest.com/keyaandyou/" className="text-gray-200 hover:text-white transition-colors">
+                <img
+                  src="https://cdn.simpleicons.org/pinterest/FFFFFF"
+                  alt="Pinterest"
+                  className="h-5 w-5"
+                />
               </a>
             </div>
           </div>
@@ -58,22 +63,22 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Customer Service</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-200 hover:text-white transition-colors">
+                <a onClick={()=>{navigate('/info')}} className="text-gray-200 hover:text-white cursor-pointer transition-colors">
                   Size Guide
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-200 hover:text-white transition-colors">
+                <a onClick={()=>{navigate('/info')}} className="text-gray-200 hover:text-white cursor-pointer transition-colors">
                   Shipping Info
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-200 hover:text-white transition-colors">
+                <a onClick={()=>{navigate('/info')}} className="text-gray-200 hover:text-white cursor-pointer transition-colors">
                   Returns
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-200 hover:text-white transition-colors">
+                <a onClick={()=>{navigate('/contact')}} className="text-gray-200 hover:text-white cursor-pointer transition-colors cursor-pointer">
                   FAQ
                 </a>
               </li>
@@ -86,15 +91,15 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center">
                 <MapPin className="h-5 w-5 mr-2 text-gray-200" />
-                <span className="text-gray-200">123 Fashion Street, Mumbai, India</span>
+                <span className="text-gray-200">Delhi, India</span>
               </div>
               <div className="flex items-center">
                 <Phone className="h-5 w-5 mr-2 text-gray-200" />
-                <span className="text-gray-200">+91 98765 43210</span>
+                <span className="text-gray-200">+91 9667341674</span>
               </div>
               <div className="flex items-center">
                 <Mail className="h-5 w-5 mr-2 text-gray-200" />
-                <span className="text-gray-200">info@kurtishop.com</span>
+                <span className="text-gray-200">keyaandyou@gmail.com</span>
               </div>
             </div>
           </div>

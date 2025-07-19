@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -9,11 +8,14 @@ import Cart from './pages/Cart';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import { CartProvider } from './context/CartContext';
+import QuickFinderTab from './components/SizeChartTab';
+import {Info} from './pages/Info';
 
 function App() {
   return (
     <CartProvider>
       <Router>
+        <QuickFinderTab />
         <div className="min-h-screen bg-gray-50 flex flex-col">
           <Header />
           <main className="flex-grow">
@@ -22,6 +24,7 @@ function App() {
               <Route path="/products" element={<Products />} />
               <Route path="/products/:id" element={<ProductDetail />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/info" element={<Info />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>

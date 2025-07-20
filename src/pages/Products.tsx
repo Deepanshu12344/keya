@@ -245,15 +245,15 @@ const Products = () => {
                 />
                 <div className="p-6 flex-1">
                   <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                  <p className="text-gray-600 mb-2">{product.category}</p>
-                  <div className="mb-3">
+                  {/* <p className="text-gray-600 mb-2">{product.category}</p> */}
+                  {/* <div className="mb-3">
                     <span className="text-sm text-gray-500">Available in: </span>
                     <span className="text-sm">{product.colors.join(', ')}</span>
                   </div>
                   <div className="mb-4">
                     <span className="text-sm text-gray-500">Sizes: </span>
                     <span className="text-sm">{product.sizes.join(', ')}</span>
-                  </div>
+                  </div> */}
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-bold text-[#7c1034]">
                       ₹{product.price}

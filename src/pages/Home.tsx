@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingBag, Truck, RotateCcw, Shield, Instagram, Play } from 'lucide-react';
@@ -18,7 +17,6 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set default posts directly for now
     setInstagramPosts([
       {
         id: '1',

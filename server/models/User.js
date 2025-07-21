@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: [5, 'Password must be at least 5 characters long']
     },
-    contact: String,
+    contact: { type: String},
     role: { type: String, enum: ['customer', 'admin'], default: 'customer' },
     address: { type: String },
     createdAt: { type: Date, default: Date.now }

@@ -7,13 +7,12 @@ import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import { CartProvider } from './context/CartContext';
 import QuickFinderTab from './components/SizeChartTab';
 import {Info} from './pages/Info';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
-    <CartProvider>
       <Router>
         <QuickFinderTab />
         <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -23,7 +22,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />
               <Route path="/products/:id" element={<ProductDetail />} />
-              <Route path="/cart" element={<Cart />} />
+              <Route path="/profile/:id" element={<ProfilePage />} />
               <Route path="/info" element={<Info />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
@@ -32,7 +31,6 @@ function App() {
           <Footer />
         </div>
       </Router>
-    </CartProvider>
   );
 }
 

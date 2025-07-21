@@ -32,6 +32,8 @@ export const login = async(request, response) => {
 
         if(!matched) return response.status(401).send("Incorrect password");
         const token = jwt.sign({id:user._id}, process.env.JWT_SECRET);
+        const {password: _, ...userWithoutPassword} = user._doc; 
+        response.status(200).json({user: userWithoutPassword, token});
     } catch (error) {
         console.log(error);
     }

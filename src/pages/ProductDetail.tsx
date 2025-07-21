@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Heart, Share2, ShoppingCart, Check } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useCart();
+  // const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [quantity, setQuantity] = useState(1);
@@ -61,7 +59,7 @@ const ProductDetail = () => {
     }
   ];
 
-  const product = products.find(p => p.id === parseInt(id));
+  const product = products.find(p => p.id === parseInt(id??""));
   const [currentImage, setCurrentImage] = useState(0);
 
   if (!product) {
@@ -84,15 +82,15 @@ const ProductDetail = () => {
       return;
     }
 
-    addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.images[0],
-      size: selectedSize,
-      color: selectedColor,
-      quantity: quantity
-    });
+    // addToCart({
+    //   id: product.id,
+    //   name: product.name,
+    //   price: product.price,
+    //   image: product.images[0],
+    //   size: selectedSize,
+    //   color: selectedColor,
+    //   quantity: quantity
+    // });
 
     alert('Product added to cart!');
   };

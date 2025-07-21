@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { X } from 'lucide-react';
+import {AuthContext} from '../context/AuthContext.jsx';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -8,14 +9,17 @@ interface AuthModalProps {
 }
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'login' }) => {
+  const {dispatch} = useContext(AuthContext);
   const [mode, setMode] = useState<'login' | 'register' | 'email-login' | 'email-register'>(initialMode);
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
 
   if (!isOpen) return null;
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -24,12 +28,58 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    onClose();
-  };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const isRegister = mode === 'register' || mode === 'email-register';
+  const url = isRegister
+    ? 'http://127.0.0.1:5000/auth/register'
+    : 'http://127.0.0.1:5000/auth/login';
+
+  try {
+
+    dispatch({
+      type: 'LOGIN_START',
+      payload:{
+        user: null,
+        token: null
+      },
+    });
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Error:', data.message || data.error);
+      return;
+    }
+
+    dispatch({
+      type: 'LOGIN_SUCCESS',
+      payload:{
+        user: data.user,
+        token: data.token
+      },
+    });
+
+    console.log(`${mode} successful`, data);
+    // Optionally store token or user info
+    if (mode === 'login') {
+      localStorage.setItem('token', data.token);
+    }
+
+    onClose(); // Close the modal or form
+  } catch (error) {
+    console.error('Request failed', error);
+  }
+};
+
 
   const renderLoginOptions = () => (
     <div className="space-y-4">
@@ -63,6 +113,18 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
 
   const renderEmailForm = () => (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={handleInputChange}
+          required
+          className="w-full px-0 py-3 border-0 border-b-2 border-gray-300 bg-transparent focus:border-[#7c1034] focus:outline-none text-gray-700 placeholder-gray-500"
+        />
+      </div>
+
       <div>
         <input
           type="email"

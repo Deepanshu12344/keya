@@ -1,7 +1,15 @@
 import { useContext, useReducer, useEffect, createContext } from "react";
 
+let parsedUser = null;
+try {
+  const userData = localStorage.getItem("user");
+  if (userData) parsedUser = JSON.parse(userData);
+} catch (err) {
+  console.error("Invalid user JSON in localStorage:", err);
+}
+
 const initialState = {
-    user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
+    user: parsedUser,
     token: localStorage.getItem('token') ? localStorage.getItem('token') : null
 }
 const LOGIN_START = 'LOGIN_START';

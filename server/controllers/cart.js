@@ -1,5 +1,6 @@
 import Cart from "../models/Cart.js";
 import Product from "../models/Product.js";
+import mongoose from "mongoose";
 
 export const addToCart = async (req, res) => {
   try {
@@ -49,15 +50,18 @@ export const addToCart = async (req, res) => {
 
 export const removeFromCart = async (request, response) => {
   try {
-    const { userId, productId } = request.params;
+    const { userId, itemId } = request.params;
 
-    if (!userId || !productId) {
-      return response.status(400).json({ message: "userId and productId are required" });
+    if (!userId || !itemId) {
+      return response.status(400).json({ message: "userId and itemId are required" });
     }
+
+    // Convert itemId to ObjectId
+    const objectId = new mongoose.Types.ObjectId(itemId);
 
     const updatedCart = await Cart.findOneAndUpdate(
       { userId },
-      { $pull: { items: { productId } } },
+      { $pull: { items: { _id: objectId } } },
       { new: true }
     );
 
@@ -75,6 +79,7 @@ export const removeFromCart = async (request, response) => {
     return response.status(500).json({ message: "Internal Server Error" });
   }
 };
+
 
 
 export const clearCart = async (request, response) => {

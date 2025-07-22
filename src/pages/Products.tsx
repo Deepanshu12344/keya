@@ -552,7 +552,7 @@ const Products = () => {
           }`}>
             {filteredProducts.map((product) => {
               // Ensure product has required properties with safe fallbacks
-              const productId = product?.id;
+              const productId = product?._id;
               const productName = product?.name || 'Unknown Product';
               const productPrice = product?.price || 0;
               const productImage = product?.image || '/api/placeholder/300/400';
